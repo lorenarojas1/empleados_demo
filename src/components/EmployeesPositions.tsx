@@ -1,6 +1,6 @@
 import React from "react";
 
-const Positions: React.FC = () => {
+const EmployeesPositions: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -8,7 +8,7 @@ const Positions: React.FC = () => {
   return (
 
     <div className="">
-      <h2>Puestos</h2>
+      <h2>empleados Puestos</h2>
       <div className="flex">
       <section className="">
         <form>
@@ -39,6 +39,18 @@ const Positions: React.FC = () => {
                         <th scope="col" className="px-6 py-3">
                             Nombre
                         </th>
+                        <th scope="col" className="px-6 py-3">
+                            ID
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Nombre
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Apellido
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Fecha de Nacimiento
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +66,18 @@ const Positions: React.FC = () => {
                         </th>
                         <td className="px-6 py-4">
                             Abogado
+                        </td>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            1
+                        </th>
+                        <td className="px-6 py-4">
+                            Lorena
+                        </td>
+                        <td className="px-6 py-4">
+                            Rojas
+                        </td>
+                        <td className="px-6 py-4">
+                            01/11/1992
                         </td>
                         <td className="px-6 py-4">
                             <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
@@ -83,4 +107,4 @@ const Positions: React.FC = () => {
   )
 }
 
-export default Positions;
+export default EmployeesPositions;
