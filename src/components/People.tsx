@@ -36,6 +36,9 @@ const People: React.FC = () => {
                             </div>
                         </th>
                         <th scope="col" className="px-6 py-3">
+                            ID
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                             Nombre
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -55,8 +58,11 @@ const People: React.FC = () => {
                             </div>
                         </td>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Lorena
+                            1
                         </th>
+                        <td className="px-6 py-4">
+                            Lorena
+                        </td>
                         <td className="px-6 py-4">
                             Rojas
                         </td>
