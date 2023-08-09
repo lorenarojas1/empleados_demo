@@ -538,9 +538,6 @@ video {
 .table {
   display: table;
 }
-.hidden {
-  display: none;
-}
 .h-4 {
   height: 1rem;
 }
@@ -837,10 +834,6 @@ video {
 
   .sm\:flex {
     display: flex;
-  }
-
-  .sm\:hidden {
-    display: none;
   }
 
   .sm\:w-auto {
