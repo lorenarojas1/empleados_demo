@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState } from "react";
+import React from "react";
 // import Person from '../interfaces/Person';
 
 const People: React.FC = () => {

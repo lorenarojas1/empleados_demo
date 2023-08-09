@@ -8,7 +8,7 @@ const EmployeesPositions: React.FC = () => {
   return (
 
     <div className="">
-      <h2>empleados Puestos</h2>
+      <h2>Empleados Puestos</h2>
       <div className="flex">
       <section className="">
         <form>

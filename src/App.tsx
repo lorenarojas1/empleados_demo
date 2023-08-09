@@ -1,15 +1,12 @@
 import React from 'react';
 import './App.css';
-import People from './components/People';
-import Positions from './components/Positions';
-import EmployeesPositions from './components/EmployeesPositions';
+
+import Tabs from './components/Tabs/Tabs';
 
 function App() {
   return (
     <div className="App">
-      <People/>
-      <Positions/>
-      <EmployeesPositions/>
+      <Tabs/>
     </div>
   );
 }
