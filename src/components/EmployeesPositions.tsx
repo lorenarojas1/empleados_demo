@@ -1,10 +1,14 @@
 import React from "react";
+import { getPeople } from "../data/dataService";
 
 const EmployeesPositions: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
+
+  const people = getPeople();
+
   return (
 
     <div className="">
@@ -54,6 +58,9 @@ const EmployeesPositions: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
+                                          {people.map((employee) => {
+                                            console.log(employee)
+                          return (
                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="w-4 p-4">
                             <div className="flex items-center">
@@ -61,31 +68,25 @@ const EmployeesPositions: React.FC = () => {
                                 <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
                             </div>
                         </td>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            1
-                        </th>
-                        <td className="px-6 py-4">
-                            Abogado
-                        </td>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            1
-                        </th>
-                        <td className="px-6 py-4">
-                            Lorena
-                        </td>
-                        <td className="px-6 py-4">
-                            Rojas
-                        </td>
-                        <td className="px-6 py-4">
-                            01/11/1992
-                        </td>
-                        <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                        </td>
-                        <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</a>
-                        </td>
-                    </tr>
+
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              {employee.id}
+                            </th><td className="px-6 py-4">
+                             {employee.id}
+                              </td><td className="px-6 py-4">
+                              {employee.id}
+                              </td><td className="px-6 py-4">
+                              {employee.id}
+                              </td><td className="px-6 py-4">
+                                <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
+                              </td><td className="px-6 py-4">
+                                <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
+                              </td>
+                              </tr>
+
+                          )})}
+                       
+                        
                 </tbody>
             </table>
         </div>

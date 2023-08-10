@@ -1,6 +1,5 @@
-/* eslint-disable react/style-prop-object */
 import React, {useState} from "react";
-import { addPerson, getPeople } from "../data/dataService";
+import { addPerson, editPerson, getPeople } from "../data/dataService";
 import Person from '../interfaces/Person';
 
 const People: React.FC = () => {
@@ -8,16 +7,25 @@ const People: React.FC = () => {
   const [firstName, setFistName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newPerson: Person = {
-      id,
-      firstName,
-      lastName,
-      dateOfBirth,
-    };
-    addPerson(newPerson);
+    if (edit && editId !== null) {
+      editPerson(editId, { id, firstName, lastName, dateOfBirth });
+      setEdit(false);
+      setEditId(null);
+    } else {
+      const newPerson: Person = {
+        id,
+        firstName,
+        lastName,
+        dateOfBirth,
+      };
+      addPerson(newPerson);
+    }
+
     setId('')
     setFistName('');
     setLastName('');
@@ -25,6 +33,16 @@ const People: React.FC = () => {
   };
 
   const people = getPeople();
+
+  const handleEdit = (person: Person) => {
+    setId(person.id.toString());
+    setFistName(person.firstName);
+    setLastName(person.lastName);
+    setDateOfBirth(person.dateOfBirth.toString());
+    setEdit(true);
+    setEditId(person.id.toString());
+  }
+
   return (
     <div className="">
       <h2>Personas</h2>
@@ -88,7 +106,7 @@ const People: React.FC = () => {
                       {person.dateOfBirth.toString()}
                     </td>
                     <td className="px-6 py-4">
-                      <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
+                      <button onClick={()=> handleEdit(person)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
                     </td>
                     <td className="px-6 py-4">
                       <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
@@ -119,7 +137,7 @@ const People: React.FC = () => {
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento</label>
                   <input value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} type="date" id="dateOfBirth" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required/>
               </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{ edit ? "Editar Persona" : "Agregar Persona"}</button>
             </form>
           </div>
         </div>

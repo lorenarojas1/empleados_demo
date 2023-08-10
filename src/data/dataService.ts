@@ -25,6 +25,15 @@ export const addPerson = (person: Person) => {
   setData(PEOPLE_KEY, people);
 };
 
+export const editPerson = (id: string, updatedPerson: Person) => {
+  const people = getPeople();
+  const personIndex = people.findIndex((person) => person.id === id);
+  if (personIndex !== -1) {
+    people[personIndex] = { ...people[personIndex], ...updatedPerson };
+    setData("people", people);
+  }
+};
+
 export const addPosition = (position: Position) => {
   const positions = getPositions();
   positions.push(position);
