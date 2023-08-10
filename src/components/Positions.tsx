@@ -46,8 +46,8 @@ const Positions: React.FC = () => {
 
   return (
     <div className="">
-      <h2>Puestos</h2>
-      <div className="flex">
+      <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Puestos</h2>
+      <div className="mt-8 flex">
         <section className="">
           <form>
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
