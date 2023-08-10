@@ -1,6 +1,6 @@
 interface Position {
-  id: number;
-  name: string;
+  id: string | number;
+  positionName: string;
 }
 
 export default Position
