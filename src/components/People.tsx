@@ -59,8 +59,8 @@ const People: React.FC = () => {
     <div className="">
       <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Personas</h2>
       <div className="mt-8 flex">
-        <section className="">
-          <form>
+        <section className="mr-8">
+          <form className="mb-5">
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
             <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

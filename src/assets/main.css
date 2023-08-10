@@ -531,11 +531,17 @@ video {
 .mb-6 {
   margin-bottom: 1.5rem;
 }
+.mr-10 {
+  margin-right: 2.5rem;
+}
 .mr-2 {
   margin-right: 0.5rem;
 }
 .mr-3 {
   margin-right: 0.75rem;
+}
+.mr-8 {
+  margin-right: 2rem;
 }
 .mt-10 {
   margin-top: 2.5rem;
@@ -590,6 +596,9 @@ video {
 }
 .w-5 {
   width: 1.25rem;
+}
+.w-80 {
+  width: 20rem;
 }
 .w-full {
   width: 100%;

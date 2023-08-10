@@ -48,8 +48,8 @@ const Positions: React.FC = () => {
     <div className="">
       <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Puestos</h2>
       <div className="mt-8 flex">
-        <section className="">
-          <form>
+        <section className="mr-10">
+          <form className="mb-5">
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Buscar</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -112,7 +112,7 @@ const Positions: React.FC = () => {
           </div>
         </section>
 
-      <div className="">
+      <div className="w-80">
       <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Registro</button>
         <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
           <form onSubmit={handleSubmit}>
