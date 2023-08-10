@@ -4,22 +4,24 @@ import { addPerson, getPeople } from "../data/dataService";
 import Person from '../interfaces/Person';
 
 const People: React.FC = () => {
-  const [firstName, setFistName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [id, setId] = useState('');
+  const [firstName, setFistName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newPerson: Person = {
-      id: Date.now(),
+      id,
       firstName,
       lastName,
       dateOfBirth,
     };
     addPerson(newPerson);
-    setFistName("");
-    setLastName("");
-    setDateOfBirth("");
+    setId('')
+    setFistName('');
+    setLastName('');
+    setDateOfBirth('');
   };
 
   const people = getPeople();
@@ -101,6 +103,10 @@ const People: React.FC = () => {
         <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Agregar Registro</button>
           <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
             <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id</label>
+                  <input value={id} onChange={(e) => setId(e.target.value)} type="text" id="id" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Id" required/>
+              </div>
               <div className="mb-6">
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                   <input value={firstName} onChange={(e) => setFistName(e.target.value)} type="text" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required/>
