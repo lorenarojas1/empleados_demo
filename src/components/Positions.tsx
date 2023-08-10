@@ -1,23 +1,48 @@
 import React, { useState } from "react";
-import { addPosition, getPositions } from "../data/dataService";
+import { addPosition, editPosition, deletePositions, getPositions } from "../data/dataService";
 import Position from '../interfaces/Position';
 
 const Positions: React.FC = () => {
+  const [positions, setPositions] = useState(getPositions());
   const [id, setId] = useState('');
   const [positionName, setPositionName] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [searchPosition, setSearchPosition] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newPosition: Position = {
-      id,
-      positionName,
+    if (edit && editId !== null) {
+      editPosition(editId, { id, positionName });
+      setEdit(false);
+      setEditId(null);
+    } else {
+      const newPosition: Position = {
+        id,
+        positionName,
+      }
+      addPosition(newPosition);
     }
-    addPosition(newPosition);
     setId('');
     setPositionName("");
+    setPositions(getPositions());
   };
 
-  const positions = getPositions();
+  const handleEdit = (position: Position) => {
+    setId(position.id.toString());
+    setPositionName(position.positionName);
+    setEdit(true);
+    setEditId(position.id.toString());
+  }
+
+  const handleDelete = (id: string | number) => {
+    deletePositions(id);
+    setId('');
+    setPositionName('');
+    setEdit(false);
+    setEditId(null);
+    setPositions(getPositions());
+  };
 
   return (
     <div className="">
@@ -32,8 +57,7 @@ const Positions: React.FC = () => {
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
               </div>
-              <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por puesto..." required/>
-              <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+              <input value={searchPosition} onChange={(e) => setSearchPosition(e.target.value)} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar por puesto..." required/>
             </div>
           </form>
           <div>
@@ -55,7 +79,12 @@ const Positions: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                { positions.map((position) => {
+                { positions
+                  .filter((position) =>
+                    `${position.positionName}`
+                    .toLowerCase().includes(searchPosition.toLowerCase()))
+
+                .map((position) => {
                   return (
                     <tr key={position.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <td className="w-4 p-4">
@@ -71,10 +100,10 @@ const Positions: React.FC = () => {
                         {position.positionName}
                       </td>
                       <td className="px-6 py-4">
-                        <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
+                        <button onClick={()=> handleEdit(position)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
                       </td>
                       <td className="px-6 py-4">
-                        <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
+                        <button onClick={()=> handleDelete(position.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
                       </td>
                     </tr>
                 )})}
@@ -95,7 +124,7 @@ const Positions: React.FC = () => {
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Puesto</label>
                 <input value={positionName} onChange={(e) => setPositionName(e.target.value)} type="text" id="positionName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Puesto" required/>
             </div>
-            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{ edit ? "Editar Puesto" : "Agregar Puesto"}</button>
           </form>
         </div>
         </div>

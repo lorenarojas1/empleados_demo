@@ -10,7 +10,7 @@ const People: React.FC = () => {
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [edit, setEdit] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
-  const [searchPerson, setSearchPerson] = useState('')
+  const [searchPerson, setSearchPerson] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,13 +26,13 @@ const People: React.FC = () => {
         dateOfBirth,
       };
       addPerson(newPerson);
-      setPeople(getPeople());
     }
 
     setId('')
     setFistName('');
     setLastName('');
     setDateOfBirth('');
+    setPeople(getPeople());
   };
 
   const handleEdit = (person: Person) => {

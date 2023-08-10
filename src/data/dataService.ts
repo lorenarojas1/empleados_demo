@@ -46,6 +46,21 @@ export const addPosition = (position: Position) => {
   setData(POSITIONS_KEY, positions);
 };
 
+export const editPosition = (id: string, updatedPosition: Position) => {
+  const positions = getPositions();
+  const positionsIndex = positions.findIndex((position) => position.id === id);
+  if (positionsIndex !== -1) {
+    positions[positionsIndex] = { ...positions[positionsIndex], ...updatedPosition };
+    setData("positions", positions);
+  }
+};
+
+export const deletePositions = (id: string | number) => {
+  const positions = getPositions();
+  const updatedPosition = positions.filter((position) => position.id !== id);
+  setData("positions", updatedPosition);
+};
+
 export const addEmployeePosition = (employeePosition: EmployeePosition) => {
   const employeesPositions = getEmployeesPositions();
   employeesPositions.push(employeePosition);
