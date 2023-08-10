@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addEmployeePosition, getPeople, getPositions, getEmployeesPositions } from "../data/dataService";
+import { addEmployeePosition, deleteEmployee, getPeople, getPositions, getEmployeesPositions } from "../data/dataService";
 import EmployeePosition from "../interfaces/EmployeePosition";
 
 const EmployeesPositions: React.FC = () => {
@@ -9,21 +9,28 @@ const EmployeesPositions: React.FC = () => {
   const [positionId, setPositionId] = useState<string | null>(null);
   const people = getPeople();
   const positions = getPositions();
+  const [search, setSearch] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (personId !== null && positionId !== null) {
-      const newEmployeePosition: EmployeePosition = {
-        id,
-        person: people.find((person) => person.id === personId)!,
-        positionPerson:  positions.find((position) => position.id === positionId)!,
-      };
-      addEmployeePosition(newEmployeePosition);
+      if (personId !== null && positionId !== null) {
+        const newEmployeePosition: EmployeePosition = {
+          id,
+          person: people.find((person) => person.id === personId)!,
+          positionPerson:  positions.find((position) => position.id === positionId)!,
+        };
+        addEmployeePosition(newEmployeePosition);
+    }
       setId('');
       setPersonId('');
       setPositionId('');
       setEmployeePosition(getEmployeesPositions())
-    }
+  };
+
+  const handleDelete = (id: string | number) => {
+    deleteEmployee(id);
+    setId('');
+    setEmployeePosition(getEmployeesPositions())
   };
 
   return (
@@ -39,11 +46,11 @@ const EmployeesPositions: React.FC = () => {
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                   </svg>
               </div>
-              <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar puesto o persona..." required/>
+              <input value={search} onChange={(e) => setSearch(e.target.value)} type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar puesto o persona..." required/>
           </div>
         </form>
         <div>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="p-4">
@@ -73,10 +80,18 @@ const EmployeesPositions: React.FC = () => {
                 <th scope="col" className="px-6 py-3">
                   Fecha de Nacimiento
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Acciones
+                </th>
               </tr>
             </thead>
           <tbody>
-            {employeePosition.map((employee) => {
+            {employeePosition
+            .filter((employee) =>
+              `${employee.positionPerson.positionName} ${employee.person.firstName} ${employee.person.lastName}`
+              .toLowerCase().includes(search.toLowerCase()))
+
+            .map((employee) => {
               return (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td className="w-4 p-4">
@@ -107,10 +122,8 @@ const EmployeesPositions: React.FC = () => {
                     {employee.person?.dateOfBirth.toString()}
                   </td>
                   <td className="px-6 py-4">
-                    <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
-                  </td>
-                  <td className="px-6 py-4">
-                    <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
+                    <button className="p-4 font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
+                    <button onClick={()=> handleDelete(employee.id)}className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
                   </td>
                 </tr>
               )

@@ -66,3 +66,18 @@ export const addEmployeePosition = (employeePosition: EmployeePosition) => {
   employeesPositions.push(employeePosition);
   setData(EMPLOYEES_POSITIONS, employeesPositions);
 };
+
+export const editEmployee = (id: string, updatedEmployee: EmployeePosition) => {
+  const employees = getEmployeesPositions();
+  const employeesIndex = employees.findIndex((employee) => employee.id === id);
+  if (employeesIndex !== -1) {
+    employees[employeesIndex] = { ...employees[employeesIndex], ...updatedEmployee };
+    setData("employeesPositions", employees);
+  }
+};
+
+export const deleteEmployee = (id: string | number) => {
+  const employees = getEmployeesPositions();
+  const updatedEmployee = employees.filter((employee) => employee.id !== id);
+  setData("employeesPositions", updatedEmployee);
+};
