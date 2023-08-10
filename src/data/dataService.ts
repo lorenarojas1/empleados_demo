@@ -34,6 +34,12 @@ export const editPerson = (id: string, updatedPerson: Person) => {
   }
 };
 
+export const deletePerson = (id: string | number) => {
+  const people = getPeople();
+  const updatedPerson = people.filter((person) => person.id !== id);
+  setData("people", updatedPerson);
+};
+
 export const addPosition = (position: Position) => {
   const positions = getPositions();
   positions.push(position);

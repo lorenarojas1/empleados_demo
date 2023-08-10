@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import { addPerson, editPerson, getPeople } from "../data/dataService";
+import { addPerson, editPerson, deletePerson, getPeople } from "../data/dataService";
 import Person from '../interfaces/Person';
 
 const People: React.FC = () => {
+  const [people, setPeople] = useState(getPeople());
   const [id, setId] = useState('');
   const [firstName, setFistName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -24,6 +25,7 @@ const People: React.FC = () => {
         dateOfBirth,
       };
       addPerson(newPerson);
+      setPeople(getPeople());
     }
 
     setId('')
@@ -31,8 +33,6 @@ const People: React.FC = () => {
     setLastName('');
     setDateOfBirth('');
   };
-
-  const people = getPeople();
 
   const handleEdit = (person: Person) => {
     setId(person.id.toString());
@@ -42,6 +42,17 @@ const People: React.FC = () => {
     setEdit(true);
     setEditId(person.id.toString());
   }
+
+  const handleDelete = (id: string | number) => {
+    deletePerson(id);
+    setId('');
+    setFistName('');
+    setLastName('');
+    setDateOfBirth('');
+    setEdit(false);
+    setEditId(null);
+    setPeople(getPeople());
+  };
 
   return (
     <div className="">
@@ -109,7 +120,7 @@ const People: React.FC = () => {
                       <button onClick={()=> handleEdit(person)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
                     </td>
                     <td className="px-6 py-4">
-                      <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
+                      <button onClick={()=> handleDelete(person.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Eliminar</button>
                     </td>
                   </tr>
                 )})}
